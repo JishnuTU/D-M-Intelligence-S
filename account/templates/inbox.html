@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Messages</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+ <div class="jumbotron text-center">
+    <h1>Disaster Management Intelligence System</h1>
+    <p>Specialized in Management of Disaster  </p>
+  </div>
+
+<div class="container">
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">DMIS</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="/account/">DashBoard</a></li>
+          <li><a href="/account/requestres">Request for Resources</a></li>
+        <li><a href="/account/updateres">Update Resources</a></li>
+        <li><a href="/account/messages">Messages</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><span class="glyphicon glyphicon-user"></span> &nbsp {{username}}</a></li>
+        <li><a href="/account/logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+    <div class="row">
+        <div class="col-sm-3 col-md-2">
+        </div>
+        <div class="col-sm-9 col-md-10">
+            <!-- Split button --><a href="/account/outbox" class="btn btn-info" >Request Status</a> &nbsp; &nbsp;
+            <a href="/account/messages" class="btn btn-default" data-toggle="tooltip" title="Refresh" ><span class="glyphicon glyphicon-refresh"></span></a>
+            <!-- Single button -->
+
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-sm-9 col-md-10">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#home" data-toggle="tab"><span class="glyphicon glyphicon-inbox">
+
+                </span>Primary</a></li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div class="tab-pane fade in active" id="home">
+                    <form method="post">{% csrf_token %}
+                    <div class="list-group">
+                    {% for mge in inbox %}
+                        <a href="#" class="list-group-item">
+                            <span class="name" style="min-width: 120px;
+                                display: inline-block;"><mark>{{mge.fromaddr}}</mark></span> <span class=""><u>{{mge.topic}}</u></span> <span class="badge">{{mge.timestamp}}</span>
+                            <span class="list-unstyled" style="font-size: 11px;"><h5>{{mge.message}}</h5></span>
+                            <span class="text-muted" style="font-size: 11px;">  <p>Required Quantity :{{mge.parameter}} </p></span>
+                            <br>
+                            <button type="submit" name="ack" value={{mge.id}} class="btn btn-success">Accept</button> &nbsp;
+                            <button type="submit" name="nack" value={{mge.id}} class="btn btn-danger">Reject</button>
+                        </a>
+                        {% endfor %}
+                    </div>
+                    </form>
+                </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

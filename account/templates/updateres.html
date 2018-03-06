@@ -1,0 +1,342 @@
+
+    	
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Update Resources</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="jumbotron text-center">
+    <h1>Disaster Management Intelligence System</h1>
+    <p>Specialized in Management of Disaster  </p>
+  </div>
+<script src="https://cdn.rawgit.com/alertifyjs/alertify.js/v1.0.10/dist/js/alertify.js"></script>
+  <script>
+{% if req %}
+  alertify.confirm("Updated Succcessfully"  , function (e) {
+                 if (e) {
+                    alertify.success("You've clicked OK");
+                 } else {
+                    alertify.error("You've clicked Cancel");
+                 }
+              });
+  {%endif%}
+
+  $(document).ready(function(){
+
+    var t ={{category|safe}}
+    if(t=="volunteer")
+     $("#myNavbar1").append('<li><a data-toggle="tab" href="#vol">Volunteer</a></li>');
+    if(t=="hospital")
+    $("#myNavbar1").append('<li><a data-toggle="tab" href="#hos">Hosipital</a></li>');
+    if(t=="accommodation")
+    $("#myNavbar1").append('<li><a data-toggle="tab" href="#acc">Shelter Place</a></li>');
+    if(t=="pronearea")
+     $("#myNavbar1").append('<li><a data-toggle="tab" href="#pop">Prone Area</a></li>');
+    if(t=="other")
+    $("#myNavbar1").append('<li><a data-toggle="tab" href="#main">DashBoard</a></li>');
+
+
+
+
+    $("#myNavbar").navbarto();
+});
+ </script>
+
+
+  </script>
+    <div class="container">
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">DMIS</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="/account/">DashBoard</a></li>
+          <li><a href="/account/requestres">Request for Resources</a></li>
+        <li><a href="/account/updateres">Update Resources</a></li>
+        <li><a href="/account/messages">Messages</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><span class="glyphicon glyphicon-user"></span> &nbsp {{username}}</a></li>
+        <li><a href="/account/logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+  <h2>Update resources</h2>
+    <div class="row">
+     <div class="col-sm-8">
+     <div data-role="navbarto">
+  <ul class="nav nav-tabs" id="myNavbar1">
+    <li><a data-toggle="tab" href="#food">Food</a></li>
+    <li><a data-toggle="tab" href="#water">Water</a></li>
+    <li><a data-toggle="tab" href="#firstaid">Firstaid</a></li>
+    <li><a data-toggle="tab" href="#rescue">Rescue Tools</a></li>
+    <li><a data-toggle="tab" href="#machine">Machine</a></li>
+      <li><a data-toggle="tab" href="#transport">Transport</a></li>
+  </ul>
+    </div>
+  <div class="tab-content">
+       <div id="vol" class="tab-pane fade">
+      <h3>Volunteer</h3>
+    <form class="form-horizontal" method="POST"> {% csrf_token %}
+         <div class="form-group">
+         <label class="control-label col-sm-2" for="humanaid">Human Aid:</label>
+         <div class="col-sm-10">
+         <input type="number" min="0" class="form-control" name="humanaid" required="true" id="humanaid" placeholder="Enter the number of Volunteers">
+         </div>
+         </div>
+         <div class="form-group">
+         <div class="col-sm-offset-2 col-sm-10">
+         <button type="submit" name="submitaid" value="vol" class="btn btn-default">Submit</button>
+         </div>
+         </div>
+    </form>
+    </div>
+<div id="acc" class="tab-pane fade">
+      <h3>Shelter Provider</h3>
+    <form class="form-horizontal" method="POST"> {% csrf_token %}
+         <div class="form-group">
+         <label class="control-label col-sm-2" for=" capacity"> Capacity:</label>
+         <div class="col-sm-10">
+         <input type="number" min="0" class="form-control" name="capacity" required="true" id=" capacity" placeholder="Enter the capacity can accomadate">
+         </div>
+         </div>
+         <div class="form-group">
+         <div class="col-sm-offset-2 col-sm-10">
+         <button type="submit" name="submitcapacity" value="acc" class="btn btn-default">Submit</button>
+         </div>
+         </div>
+    </form>
+    </div>
+<div id="pop" class="tab-pane fade">
+      <h3>Prone Area</h3>
+    <form class="form-horizontal" method="POST"> {% csrf_token %}
+         <div class="form-group">
+         <label class="control-label col-sm-2" for="population"> Population:</label>
+         <div class="col-sm-10">
+         <input type="number" min="0" class="form-control" name="population" required="true" id="population" placeholder="Enter the population of the area">
+         </div>
+         </div>
+         <div class="form-group">
+         <div class="col-sm-offset-2 col-sm-10">
+         <button type="submit" name="submitpopulation" value="pop" class="btn btn-default">Submit</button>
+         </div>
+         </div>
+    </form>
+    </div>
+
+<div id="hos" class="tab-pane fade">
+      <h3>Hosipital</h3>
+    <form class="form-horizontal" method="POST"> {% csrf_token %}
+         <div class="form-group">
+         <label class="control-label col-sm-2" for="canoccupy">Can Occupy:</label>
+         <div class="col-sm-10">
+         <input type="number" min="0" class="form-control" name="canoccupy" required="true" id="canoccupy" placeholder="Enter the number can be treated">
+         </div>
+         </div>
+         <div class="form-group">
+         <div class="col-sm-offset-2 col-sm-10">
+         <button type="submit" name="submitcanoccupy" value="hos" class="btn btn-default">Submit</button>
+         </div>
+         </div>
+    </form>
+    </div>
+<div id="main" class="tab-pane fade  in active">
+ <h3>Update the available Resources can be provided for Emergency response for Disaster Serving</h3>
+ </div>
+
+    <div id="food" class="tab-pane fade">
+      <h3>Food</h3>
+    <form class="form-horizontal" method="POST"> {% csrf_token %}
+         <div class="form-group">
+         <label class="control-label col-sm-2" for="food">Packet:</label>
+         <div class="col-sm-10">
+         <input type="number" min="0" class="form-control" name="packet" required="true" id="packet" placeholder="Enter the quantity">
+         </div>
+         </div>
+         <div class="form-group">
+         <div class="col-sm-offset-2 col-sm-10">
+         <button type="submit" name="submitfood" value="food" class="btn btn-default">Submit</button>
+         </div>
+         </div>
+    </form>
+    </div>
+      <div id="water" class="tab-pane fade">
+      <h3>Water</h3>
+    <form class="form-horizontal" method="POST"> {% csrf_token %}
+        <div class="form-group">
+        <label class="control-label col-sm-2" for="water">Quantity:</label>
+        <div class="col-sm-10">
+        <input type="number" min="0" class="form-control" name="quantity" required="true" id="quantity" placeholder="Enter the quantity">
+        </div>
+        </div>
+        <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" name="submitwater" value="water" class="btn btn-default">Submit</button>
+      </div>
+    </div>
+    </form>
+    </div>
+    <div id="firstaid" class="tab-pane fade ">
+      <h3>First Aid</h3>
+    <form class="form-horizontal" method="POST"> {% csrf_token %}
+         <div class="form-group">
+        <label class="control-label col-sm-2" for="email">Kit:</label>
+        <div class="col-sm-10">
+        <input type="number" min="0" class="form-control" name="kit"  required="true" id="kit" placeholder="Enter the quantity">
+        </div>
+        </div>
+        <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" name="submitfirstaid" value="firstaid" class="btn btn-default">Submit</button>
+        </div>
+        </div>
+    </form>
+    </div>
+    <div id="rescue" class="tab-pane fade">
+      <h3>Rescue Tools</h3>
+    <form class="form-horizontal" method="POST"> {% csrf_token %}
+          <div class="form-group">
+        <label class="control-label col-sm-2" for="email">Box:</label>
+        <div class="col-sm-10">
+        <input type="number" min="0" class="form-control" name="box" required="true" id="box" placeholder="Enter the quantity">
+        </div>
+        </div>
+        <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" name="submitrescuetool" value="rescue" class="btn btn-default">Submit</button>
+        </div>
+        </div>
+    </form>
+    </div>
+    <div id="machine" class="tab-pane fade">
+      <h3>Machines</h3>
+    <form class="form-horizontal" method="POST"> {% csrf_token %}
+         <div class="form-group">
+        <label class="control-label col-sm-2" for="machine">Fire engine:</label>
+        <div class="col-sm-10">
+        <input type="number" min= "0" class="form-control" name="fireengine" required="true" id="fireengine" placeholder="Enter the quantity">
+        </div><br></br>
+        <label class="control-label col-sm-2" for="machine">JCB:</label>
+        <div class="col-sm-10">
+        <input type="number" min= "0" class="form-control" name="jcb"  required="true" id="jcb" placeholder="Enter the quantity">
+        </div><br></br>
+        <label class="control-label col-sm-2" for="machine">Ambulance:</label>
+        <div class="col-sm-10">
+        <input type="number" min= "0" class="form-control" name="ambulance" required="true" id="ambulance" placeholder="Enter the quantity">
+        </div>
+        </div>
+        <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" name="submitmachine" value="machine" class="btn btn-default">Submit</button>
+        </div>
+        </div>
+    </form>
+    </div>
+      <div id="transport" class="tab-pane fade">
+      <h3>Transport</h3>
+        <form class="form-horizontal" method="POST"> {% csrf_token %}
+        <div class="form-group">
+        <label class="control-label col-sm-2" for="transport">Type of Vehicle:</label>
+        <div class="col-sm-10">
+        <select class="form-control" id="typeofvehicle" name="typeofvehicle" required="true">
+            <option value="Human">Humans</option>
+            <option value="Goods">Goods</option>
+        </select>
+        </div>
+        </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="machine">Capacity:</label>
+        <div class="col-sm-10">
+        <input type="number" min= "0" class="form-control" required="true" name="capacity"  id="capacity" placeholder="Enter the quantity">
+        </div>
+        </div>
+        <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" name="submittransport" value="transport" class="btn btn-default">Submit</button>
+        </div>
+        </div>
+    </form>
+    </div>
+  </div>
+  </div>
+  <div class="col-sm-4">
+      <div class="panel panel-info">
+      <div class="panel-heading">Resources List</div>
+      <div class="panel-body">
+            <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Resources</th>
+        <th>Quantity</th>
+
+     </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Food</td>
+        <td>{{food}}</td>
+      </tr>
+    <tr>
+        <td>Water</td>
+        <td>{{water}}</td>
+      </tr>
+    <tr>
+        <td>First Aid</td>
+        <td>{{firstaid}}</td>
+      </tr>
+<tr>
+        <td>Rescue Tool</td>
+        <td>{{rescuetool}}</td>
+      </tr>
+    <tr>
+        <td>Fire Engine</td>
+        <td>{{fireengine}}</td>
+      </tr>
+    <tr>
+        <td>JCB</td>
+        <td>{{jcb}}</td>
+      </tr>
+    <tr>
+        <td>Ambulance</td>
+        <td>{{ambulance}}</td>
+      </tr>
+    <tr>
+        <td>Transport(Goods)</td>
+        <td>{{tgoods}}</td>
+      </tr>
+    <tr>
+        <td>Transport(Human)</td>
+        <td>{{thuman}}</td>
+      </tr>
+    </tbody>
+  </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+    </div>
+
+</body>
+</html>

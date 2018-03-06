@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Control Panel</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+ </head>
+<body>
+
+<div class="jumbotron text-center">
+    <h1>Disaster Management Intelligence System</h1>
+    <p>Specialized in Management of Disaster  </p>
+  </div>
+ <script src="https://cdn.rawgit.com/alertifyjs/alertify.js/v1.0.10/dist/js/alertify.js"></script>
+
+<div class="container">
+
+
+
+<nav class="navbar navbar-default" style="background-color: #FFFAFA;">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand"  href="#">DMIS</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+    <li class="active"><a href="/controlunit/" class="btn btn-default navbar-btn btn-xs ">Home</a></li> &nbsp;
+    <li ><a href="/controlunit/systempanel" class="btn btn-default navbar-btn btn-xs ">Control Panel</a></li> &nbsp;
+    <li><a href="/controlunit/nearestlocater" class="btn btn-default btn-xs navbar-btn">Nearest Locater</a></li>
+    <li><a href="/controlunit/messages" class="btn btn-default btn-xs navbar-btn" >Messages</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#" class="btn btn-default navbar-btn btn-xs " ><span class="glyphicon glyphicon-user"></span> &nbsp {{username}}</a></li>
+        <li><a href="/controlunit/logout" class="btn btn-default btn-xs navbar-btn"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+<div class="btn-group btn-group-justified">
+    <div class="btn-group">
+      <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Launch Automatic System</button>
+    </div>
+    <div class="btn-group">
+       <button type="button" name="opensendmodal" data-toggle="modal" data-target="#sendsms" class="btn btn-success">Compose for New Aid</button>
+    </div>
+
+        <div class="btn-group">
+      <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal1">Halt System</button>
+    </div>
+  </div>
+<br>
+    <br>
+
+
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Input the Initial Parameters</h4>
+        </div>
+        <div class="modal-body">
+           <form class="form-horizontal" method="post">{% csrf_token %}
+
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="selectaid">Select Hazard:</label>
+          <div class="col-sm-10">
+        <select class="form-control" id="selecthazard" name="selecthazard">
+           <option value="null">Select</option>
+            <option value="Earthquake">Earthquake</option>
+            <option value="Flood">Flood</option>
+            <option value="Tsunami">Tsunami</option>
+            <option value="Accident">Accident</option>
+            <option value="Cyclone">Cyclone</option>
+            <option value="FactoryLeak">Factory Leak</option>
+            <option value="Explosion">Nuclear Explosion</option>
+      </select>
+    </div>
+      </div>
+
+       <div class="form-group">
+      <label class="control-label col-sm-2" for="span">Span of Area:</label>
+           <div class="col-sm-10">
+      <input type="number" step="1" min="0" class="form-control" id="span" name="span" required="true"  placeholder="Enter the affected population">
+    </div>
+       </div>
+    <div class="form-group">
+
+      <label class="control-label col-sm-2" for="latitude">Latitude:</label>
+        <div class="col-sm-10">
+      <input type="number" step="0.0000001" min="-85" max="85" class="form-control" id="latitude" name="latitude" required="true" placeholder="Enter latitude">
+    </div>
+    </div>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <div class="form-group">
+
+      <label class="control-label col-sm-2" for="longitude">Longitude:</label>
+        <div class="col-sm-10">
+      <input type="number" step="0.0000001" min="-180" max="180" class="form-control" id="longitude" name="longitude" required="true"  placeholder="Enter longitude">
+    </div>
+    </div>
+
+          <a href="http://www.mapcoordinates.net/en" class="btn btn-link" target="_blank" >Find  Latitude and Longitude using Location</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <button type="submit" name="run" value="run" class="btn btn-default">Start</button>
+  </form>
+  </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+
+
+  <div class="modal fade" id="myModal1" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Deallocate All Aids and Services</h4>
+        </div>
+
+        <div class="modal-body">
+            <p>Are You Sure ? </p>
+                <form method="post">{% csrf_token %}
+         &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                     &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                     &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    <button type="submit" name="deallocate" class="btn btn-default">Continue</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+
+
+<div class="modal fade" id="sendsms" role="dialog">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal">&times;</button>
+<h4 class="modal-title">Send Message [To System]</h4>
+</div>
+<div class="modal-body">
+<form method="post">{% csrf_token %}
+ <div class="form-group">
+ <label for="topic">Topic:</label><select class="form-control" name="topic" id="topic" required="true">
+ <option value="Request for Service">Request</option>
+ </select>
+ </div>
+<div class="form-group">
+<label for="selectaid">Select Aid:</label>
+ <select class="form-control" id="selectaid" name="selectaid">
+<option value="null">Select</option>
+<option value="Volunteer">Volunteer</option>
+<option value="Hospital">Hospital</option>
+<option value="Accomodation">Accomodation Places</option>
+<option value="Food">Food</option>
+<option value="Water">Water</option>
+<option value="RescueTool">Rescue Tools</option>
+<option value="FirstAid">Firstaid</option>
+<option value="FireEngine">Fire Engine</option>
+<option value="JCB">JCB</option>
+<option value="Ambulance">Ambulance</option>
+<option value="Transport-Goods">Transportation of Goods</option>
+<option value="Transport-Human">Transportation of Human</option>
+</select>
+</div>
+<div class="form-group">
+<label for="parameter">Extra field:</label>
+<input type="number" min ="0" value="0" class="form-control" name="parameter" id="parameter" placeholder="Enter the Required Quantity">
+</div>
+<button type="submit" name="send" value="new"class="btn btn-success">Send</button>
+</form>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+<div class="row">
+
+
+    <div class="panel panel-success">
+      <div class="panel-heading">
+          <div class="row"><div class="col-sm-8"><h3> System Status </h3> </div>
+               <div class="col-sm-4">
+          <form method="post">{% csrf_token %}
+          <button type="submit" name="refresh" class="btn btn-default"><span class="glyphicon glyphicon-refresh"></span></button>
+          </form>
+      </div>
+           </div>
+      </div>
+      <div class="panel-body">
+
+
+ <div class="container-fluid" >
+        <div>
+               {% for f in facts %}
+            <div class="row"><h4>{{f}}</h4></div>
+            <hr>
+              {% endfor %}
+        </div>
+ </div>
+
+      </div>
+
+    </div>
+
+</div>
+
+
+
+
+<div class="row">
+    <div class="col-sm-6">
+        <div class="panel panel-info">
+      <div class="panel-heading"> <h3>Aided Users Details </h3>
+      </div>
+      <div class="panel-body">
+          <table class="table table-hover" >
+                  <thead>
+        <tr>
+        <th>User</th>
+        <th>Aid</th>
+         <th>Latitude</th>
+        <th>Longitude</th>
+            <th>Description</th>
+            <th>
+                Status
+            </th>
+     </tr>
+    </thead>
+              <tbody>
+           {% for data in table_data%}
+            <tr>
+                <td>{{data.title}}</td>
+                <td>{{data.aid}}</td>
+                <td>{{data.lat}}</td>
+                <td>{{data.lng}}</td>
+                <td>{{data.description}}</td>
+                <td>{{data.status}}</td>
+            </tr>
+
+              {% endfor %}
+              </tbody>
+          </table>
+      </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6">
+    <div class="panel panel-danger">
+        <div class="panel-heading"><h3> Google Map View </h3></div>
+      <div class="panel-body"><div id="dvMap" style="height: 500px;"></div></div>
+
+<script src="http://maps.googleapis.com/maps/api/js?sensor=false" type="text/javascript"></script><script type="text/javascript">
+var markers = {{map_data|safe}};
+window.onload = function () {
+var mapOptions = {
+center: new google.maps.LatLng(markers[0].lat, markers[0].lng),
+zoom: 10,
+mapTypeId: google.maps.MapTypeId.ROADMAP
+};
+var map = new google.maps.Map(document.getElementById("dvMap"), mapOptions);
+var infoWindow = new google.maps.InfoWindow();
+var lat_lng = new Array();
+var latlngbounds = new google.maps.LatLngBounds();
+for (i = 0; i < markers.length; i++) {
+var data = markers[i]
+var myLatlng = new google.maps.LatLng(data.lat, data.lng);
+lat_lng.push(myLatlng);
+var marker = new google.maps.Marker({
+position: myLatlng,
+map: map,
+title: data.title
+});
+latlngbounds.extend(marker.position);
+(function (marker, data) {
+google.maps.event.addListener(marker, "click", function (e) {
+infoWindow.setContent(data.description);
+infoWindow.open(map, marker);
+});
+})(marker, data);
+}
+map.setCenter(latlngbounds.getCenter());
+map.fitBounds(latlngbounds);
+}
+
+</script>
+    </div>
+    </div>
+</div>
+      </div>
+
+</body>
+</html>

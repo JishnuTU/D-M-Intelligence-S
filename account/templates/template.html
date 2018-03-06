@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>hello</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script>
+$(document).ready(function(){
+    var t ={{obj_as_json|safe}}
+    if(t.a==2)
+    $("#myNavbar").append('<li><a data-toggle="tab" href="#transport">Transport</a></li>');
+    $("#myNavbar").navbar1();
+});
+</script>
+
+
+</head>
+<body>
+
+ <div data-role="navbar1">
+     <ul class="nav nav-tabs" id="myNavbar">
+       <li class="active"><a data-toggle="tab" href="#vol">{{cat}}</a></li>
+    <li><a data-toggle="tab" href="#food">Food</a></li>
+    <li><a data-toggle="tab" href="#water">Water</a></li>
+    <li><a data-toggle="tab" href="#firstaid">Firstaid</a></li>
+    <li><a data-toggle="tab" href="#rescue">Rescue Tools</a></li>
+    <li><a data-toggle="tab" href="#machine">Machine</a></li>
+  </ul>
+  </div>
+
+  <div class="tab-content">
+       <div id="vol" class="tab-pane fade in active">
+
+      <h3>{{cat}}</h3>
+    <form class="form-horizontal" method="POST"> {% csrf_token %}
+         <div class="form-group">
+         <label class="control-label col-sm-2" for="food">Human Aid:</label>
+         <div class="col-sm-10">
+         <input type="number" min="0" class="form-control" name="packet" required="true" id="packet" placeholder="Enter the number of Volunteers">
+         </div>
+         </div>
+         <div class="form-group">
+         <div class="col-sm-offset-2 col-sm-10">
+         <button type="submit" name= {{cat}} value="vol" class="btn btn-default">Submit</button>
+         </div>
+         </div>
+    </form>
+    </div>
+
+
+    <div id="food" class="tab-pane fade">
+      <h3>Food</h3>
+    <form class="form-horizontal" method="POST"> {% csrf_token %}
+         <div class="form-group">
+         <label class="control-label col-sm-2" for="food">Packet:</label>
+         <div class="col-sm-10">
+         <input type="number" min="0" class="form-control" name="packet" required="true" id="packet" placeholder="Enter the quantity">
+         </div>
+         </div>
+         <div class="form-group">
+         <div class="col-sm-offset-2 col-sm-10">
+         <button type="submit" name="submitfood" value="food" class="btn btn-default">Submit</button>
+         </div>
+         </div>
+    </form>
+    </div>
+      <div id="water" class="tab-pane fade">
+      <h3>Water</h3>
+    <form class="form-horizontal" method="POST"> {% csrf_token %}
+        <div class="form-group">
+        <label class="control-label col-sm-2" for="water">Quantity:</label>
+        <div class="col-sm-10">
+        <input type="number" min="0" class="form-control" name="quantity" required="true" id="quantity" placeholder="Enter the quantity">
+        </div>
+        </div>
+        <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" name="submitwater" value="water" class="btn btn-default">Submit</button>
+      </div>
+    </div>
+    </form>
+    </div>
+    <div id="firstaid" class="tab-pane fade">
+      <h3>First Aid</h3>
+    <form class="form-horizontal" method="POST"> {% csrf_token %}
+         <div class="form-group">
+        <label class="control-label col-sm-2" for="email">Kit:</label>
+        <div class="col-sm-10">
+        <input type="number" min="0" class="form-control" name="kit"  required="true" id="kit" placeholder="Enter the quantity">
+        </div>
+        </div>
+        <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" name="submitfirstaid" value="firstaid" class="btn btn-default">Submit</button>
+        </div>
+        </div>
+    </form>
+    </div>
+    <div id="rescue" class="tab-pane fade">
+      <h3>Rescue Tools</h3>
+    <form class="form-horizontal" method="POST"> {% csrf_token %}
+          <div class="form-group">
+        <label class="control-label col-sm-2" for="email">Box:</label>
+        <div class="col-sm-10">
+        <input type="number" min="0" class="form-control" name="box" required="true" id="box" placeholder="Enter the quantity">
+        </div>
+        </div>
+        <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" name="submitrescuetool" value="rescue" class="btn btn-default">Submit</button>
+        </div>
+        </div>
+    </form>
+    </div>
+    <div id="machine" class="tab-pane fade">
+      <h3>Machines</h3>
+    <form class="form-horizontal" method="POST"> {% csrf_token %}
+         <div class="form-group">
+        <label class="control-label col-sm-2" for="machine">Fire engine:</label>
+        <div class="col-sm-10">
+        <input type="number" min= "0" class="form-control" name="fireengine" required="true" id="fireengine" placeholder="Enter the quantity">
+        </div><br></br>
+        <label class="control-label col-sm-2" for="machine">JCB:</label>
+        <div class="col-sm-10">
+        <input type="number" min= "0" class="form-control" name="jcb"  required="true" id="jcb" placeholder="Enter the quantity">
+        </div><br></br>
+        <label class="control-label col-sm-2" for="machine">Ambulance:</label>
+        <div class="col-sm-10">
+        <input type="number" min= "0" class="form-control" name="ambulance" required="true" id="ambulance" placeholder="Enter the quantity">
+        </div>
+        </div>
+        <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" name="submitmachine" value="machine" class="btn btn-default">Submit</button>
+        </div>
+        </div>
+    </form>
+    </div>
+      <div id="transport" class="tab-pane fade">
+      <h3>Transport</h3>
+        <form class="form-horizontal" method="POST"> {% csrf_token %}
+        <div class="form-group">
+        <label class="control-label col-sm-2" for="transport">Type of Vehicle:</label>
+        <div class="col-sm-10">
+        <select class="form-control" id="typeofvehicle" name="typeofvehicle" required="true">
+            <option value="Human">Humans</option>
+            <option value="Goods">Goods</option>
+        </select>
+        </div>
+        </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="machine">Capacity:</label>
+        <div class="col-sm-10">
+        <input type="number" min= "0" class="form-control" required="true" name="capacity"  id="capacity" placeholder="Enter the quantity">
+        </div>
+        </div>
+        <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" name="submittransport" value="transport" class="btn btn-default">Submit</button>
+        </div>
+        </div>
+    </form>
+    </div>
+  </div>
+</body>
+</html>

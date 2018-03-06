@@ -1,0 +1,65 @@
+(deftemplate disaster
+	(slot hazard (type STRING))
+    	(slot latitude (type NUMBER))
+    	(slot longitude (type NUMBER))
+    	(slot span (type NUMBER)))
+(deftemplate entity
+    (slot aid (type STRING))
+    (slot latitude (type NUMBER))
+    (slot longitude (type NUMBER))
+    (slot quantity (type NUMBER)))
+
+  (defrule pronearea
+  (check_prone_area ?lat ?long)
+  =>
+  (python-call prone_area_checking ?lat ?long))
+
+                var wrapper         = $(".form-horizontal");
+
+
+ window.onload = function() {
+string = {{field|safe}};
+
+$(document).ready(function() {
+                   var wrapper         = $(".form-horizontal");
+                  for(i=0;i<string.length;i++)
+                  {
+                  if(string[i]=="Volunteer")
+                     $(wrapper).prepend('<div class="form-group"><label class="control-label col-sm-4" for="volunteer">Volunteer:</label><div class="col-sm-8"><input type="number" class="form-control" name="vol_no" min="0" placeholder="Human Aid Required"></div></div>');
+
+                  if(string[i]=="Transport-Human")
+                   $(wrapper).prepend('<div class="form-group"><label class="control-label col-sm-4" for="hgoods">Transport of Human:</label><div class="col-sm-8"><input type="number" class="form-control" name="hgoods_no" min="0" placeholder="Service Required Transport of Human "></div></div>');
+
+                  if(string[i]=="Accommodation")
+                   $(wrapper).prepend('<div class="form-group"><label class="control-label col-sm-4" for="accomodation">Shelter:</label><div class="col-sm-8"><input type="number" class="form-control" name="acc_no" min="0" placeholder="Capacity Required "></div></div>');
+
+                  if(string[i]=="Hospital")
+                  $(wrapper).prepend('<div class="form-group"><label class="control-label col-sm-4" for="hospital">Hospital:</label><div class="col-sm-8"><input type="number" class="form-control" name="hos_no" min="0" placeholder="Service Required "></div></div>');
+
+                  if(string[i]=="Food")
+                  $(wrapper).prepend('<div class="form-group"><label class="control-label col-sm-4" for="food">Food:</label><div class="col-sm-8"><input type="number" class="form-control" name="food_no" min="0" placeholder="Food Packets Required "></div></div>');
+
+                  if(string[i]=="Water")
+                   $(wrapper).prepend('<div class="form-group"><label class="control-label col-sm-4" for="water">Water:</label><div class="col-sm-8"><input type="number" class="form-control" name="water_no" min="0" placeholder="Water Quantity Required "></div></div>');
+
+                  if(string[i]=="RescueTool")
+                   $(wrapper).prepend('<div class="form-group"><label class="control-label col-sm-4" for="rescue">Rescue Tool:</label><div class="col-sm-8"><input type="number" class="form-control" name="rescue_no" min="0" placeholder="Rescue Tool Kit Required"></div></div>');
+
+                  if(string[i]=="FirstAid")
+                  $(wrapper).prepend('<div class="form-group"><label class="control-label col-sm-4" for="firstaid">First Aid:</label><div class="col-sm-8"><input type="number" class="form-control" name="firstaid_no" min="0" placeholder="First Aid Box Required "></div></div>');
+
+                  if(string[i]=="Ambulance")
+                   $(wrapper).prepend('<div class="form-group"><label class="control-label col-sm-4" for="ambulance">Ambulance:</label><div class="col-sm-8"><input type="number" class="form-control" name="ambulance_no" min="0" placeholder="Ambulance Service Required "></div></div>');
+
+                  if(string[i]=="FireEngine")
+                  $(wrapper).prepend('<div class="form-group"><label class="control-label col-sm-4" for="fireengine">Fire Engine:</label><div class="col-sm-8"><input type="number" class="form-control" name="fireengine_no" min="0" placeholder="Fire Engine Service Required "></div></div>');
+
+                  if(string[i]=="JCB")
+                   $(wrapper).prepend('<div class="form-group"><label class="control-label col-sm-4" for="jcb">JCB:</label><div class="col-sm-8"><input type="number" class="form-control" name="jcb" min="0" placeholder=" JCB Service Required "></div></div>');
+
+                  if(string[i]=="Transport-Goods")
+                   $(wrapper).prepend('<div class="form-group"><label class="control-label col-sm-4" for="tgoods">Transport of Goods:</label><div class="col-sm-8"><input type="number" class="form-control" name="tgoods_no" min="0" placeholder="Service Required Transport of Goods "></div></div>');
+
+                  }
+   });
+};

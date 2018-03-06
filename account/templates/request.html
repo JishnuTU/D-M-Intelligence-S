@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Request Resources</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="jumbotron text-center">
+    <h1>Disaster Management Intelligence System</h1>
+    <p>Specialized in Management of Disaster  </p>
+  </div>
+<script src="https://cdn.rawgit.com/alertifyjs/alertify.js/v1.0.10/dist/js/alertify.js"></script>
+  <script>
+{% if req %}
+  alertify.confirm("Request Submited Succcessfully"  , function (e) {
+                 if (e) {
+                    alertify.success("Wait for the Response");
+                 } else {
+                    alertify.error("You've clicked Cancel");
+                 }
+              });
+  {%endif%}
+  {% if statuserror %}
+  alertify.confirm("Request Cannot be Proceed"  , function (e) {
+                 if (e) {
+                    alertify.success("Wait for the Allocation of  Duty");
+                 } else {
+                    alertify.error("You've clicked Cancel");
+                 }
+              });
+  {%endif%}
+  </script>
+    <div class="container">
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">DMIS</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="/account/">DashBoard</a></li>
+          <li><a href="/account/requestres">Request for Resources</a></li>
+        <li><a href="/account/updateres">Update Resources</a></li>
+        <li><a href="/account/messages">Messages</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><span class="glyphicon glyphicon-user"></span> &nbsp {{username}}</a></li>
+        <li><a href="/account/logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+<div class="container">
+  <h2>Request for Resources</h2>
+  
+</div>
+<ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#food">Food</a></li>
+    <li><a data-toggle="tab" href="#water">Water</a></li>
+    <li><a data-toggle="tab" href="#firstaid">Firstaid</a></li>
+    <li><a data-toggle="tab" href="#rescue">Rescue Tools</a></li>
+    <li><a data-toggle="tab" href="#machine">Machine</a></li>
+  </ul>
+
+  <div class="tab-content">
+    <div id="food" class="tab-pane fade in active">
+      <h3>Food</h3>
+     <form class="form-horizontal" method="POST"> {% csrf_token %}
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="food">Food:</label>
+      <div class="col-sm-10">
+        <input type="number" required="true" min="0" class="form-control" id="food" name="food" placeholder="Enter number of packet reqiured">
+      </div>
+      <div class="col-sm-offset-2 col-sm-10">
+      <br>
+        <button type="submit" name="submitfood" class="btn btn-default">Submit</button>
+      </div>
+      </div>
+ </form>
+
+    </div>
+    <div id="water" class="tab-pane fade">
+      <h3>Water</h3>
+      <form class="form-horizontal" method="post"> {% csrf_token %}
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="water">Water:</label>
+      <div class="col-sm-10">
+        <input type="number" required="true" min="0"class="form-control" id="water" name="water" placeholder="Enter number of quantity reqiured">
+      </div>
+
+      <div class="col-sm-offset-2 col-sm-10">
+              <br>
+        <button type="submit" name="submitwater" class="btn btn-default">Submit</button>
+      </div>
+      </div>
+      </form>
+ 
+    </div>
+    <div id="firstaid" class="tab-pane fade">
+      <h3>First Aid</h3>
+    <form class="form-horizontal"  method="POST"> {% csrf_token %}
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="firstaid">Firstaid:</label>
+      <div class="col-sm-10">
+        <input type="number" min="0" required="true" class="form-control" id="firstaid" name="firstaid" placeholder="Enter number of kits reqiured">
+      </div>
+
+      <div class="col-sm-offset-2 col-sm-10">
+              <br>
+        <button type="submit" name="submitfirstaid" class="btn btn-default">Submit</button>
+      </div>
+      </div>
+ </form>
+
+    </div>
+    <div id="rescue" class="tab-pane fade">
+      <h3>Rescue Tools</h3>
+      <form class="form-horizontal"  method="POST"> {% csrf_token %}
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="rescue">Rescue Tools:</label>
+      <div class="col-sm-10">
+        <input type="number" min="0" class="form-control" required="true" id="rescue" name="rescue" placeholder="Enter number of box reqiured">
+      </div>
+      <br>
+      <div class="col-sm-offset-2 col-sm-10">
+              <br>
+        <button type="submit" name="submitrescue"class="btn btn-default">Submit</button>
+      </div>
+      </div>
+ </form>
+
+    </div>
+    <div id="machine" class="tab-pane fade">
+      <h3>Machine</h3>
+       <form class="form-horizontal"  method="POST"> {% csrf_token %}
+  <div class="form-group">
+    <label class="control-label col-sm-2" for="fireengine">Fire Engine:</label>
+    <div class="col-sm-10">
+      <input type="number" min="0"  required="true" class="form-control" id="fireengine" placeholder="Enter number">
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-sm-2" for="ambulance">Ambulance:</label>
+    <div class="col-sm-10"> 
+      <input type="number" min="0" required="true" class="form-control" id="ambulance" name="ambulance" placeholder="Enter number">
+    </div>
+  </div>
+ <div class="form-group">
+    <label class="control-label col-sm-2" for="jcb">JCB:</label>
+    <div class="col-sm-10"> 
+      <input type="number" min="0" required="true" class="form-control" id="jcb" name="jcb" placeholder="Enter number">
+    </div>
+  </div>
+ <br>
+  
+  <div class="form-group"> 
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submitmachine" class="btn btn-default">Submit</button>
+    </div>
+  </div>
+</form>
+
+
+      </div>
+ </form>
+
+
+    </div>
+  
+  </div>
+
+</body>
+</html>

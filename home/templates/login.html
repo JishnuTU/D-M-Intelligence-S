@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <title>DMIS</title>
+</head>
+<body>
+  <div class="jumbotron text-center">
+    <h1>Disaster Management Intelligence System</h1>
+    <p>Specialized in Management of Disaster </p>
+  </div>
+
+   <script src="https://cdn.rawgit.com/alertifyjs/alertify.js/v1.0.10/dist/js/alertify.js"></script>
+  <script>
+{% if status %}
+  alertify.confirm("Login Failed"  , function (e) {
+                 if (e) {
+                    alertify.success("Username and Password does not Match");
+                 } else {
+                    alertify.error("You've clicked Cancel");
+                 }
+              });
+  {%endif%}
+  </script>
+
+<div class="container">
+  <div class="panel panel-warning">
+     <div class="panel-heading"><h2>Login</h2></div>
+     <div class="panel-body">
+  <form name = "form" action = "/home/login/" method = "POST" > {% csrf_token %}
+    <div class="form-group">
+      <label for="username">Username:</label>
+      <input type="text" class="form-control" name="username" required="true" id="username" placeholder="Enter username">
+    </div>
+    <div class="form-group">
+      <label for="pwd">Password:</label>
+      <input type="password" class="form-control" name="pwd" id="pwd" placeholder="Enter password" required="true">
+    </div>
+      <br>
+      <br>
+    <a href="/home/register" class="btn btn-info" role="button">Register New User</a> &nbsp  &nbsp  &nbsp  &nbsp
+
+
+    <button type="submit" value="login" name="login" class="btn btn-default">Submit</button>
+  </form>
+</div>
+  </div>
+
+</div>
+
+</body>
+</html>

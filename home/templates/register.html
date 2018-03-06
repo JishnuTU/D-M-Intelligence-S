@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <title>DMIS</title>
+</head>
+<body>
+  <div class="jumbotron text-center">
+    <h1>Disaster Management Intelligence System</h1>
+    <p>Specialized in Management of Disaster  </p>
+  </div>
+  &nbsp   &nbsp  &nbsp  &nbsp  &nbsp  &nbsp  &nbsp
+
+
+  <script src="https://cdn.rawgit.com/alertifyjs/alertify.js/v1.0.10/dist/js/alertify.js"></script>
+  <script>
+{% if status %}
+  alertify.confirm("Account Created Succcessfully"  , function (e) {
+                 if (e) {
+                    alertify.success("You've clicked OK");
+                 } else {
+                    alertify.error("You've clicked Cancel");
+                 }
+              });
+  {%endif%}
+  {% if fail %}
+    alertify.confirm("Account Creation Failed"  , function (e) {
+                   if (e) {
+                      alertify.success("You've clicked OK");
+                   } else {
+                      alertify.error("You've clicked Cancel");
+                   }
+                });
+    {%endif%}
+
+    $(document).ready(function () {
+    $("#category").change(function () {
+        var val = $(this).val();
+        if (val == "volunteer") {
+            $("#atype").html("<option value='private'>Private</option><option value='nssncc'>NSS/NCC</option><option value='redcross'>Redcross</option><option value='fireforce'>Fireforce</option><option value='other'>Other</option>");
+        } else if (val == "hospital") {
+            $("#atype").html("<option value='Govt'>Govt</option><option value='private'>Private</option><option value='cooperative'>Co-operative</option>");
+        } else if (val == "pronearea") {
+            $("#atype").html("<option value='earthquack'>EarthQuack</option><option value='tsunami'>Tsunami</option><option value='other'>Other</option>");
+        } else if (val == "accommodation") {
+            $("#atype").html("<option value='temporary'>Temporary</option><option value='shelter'>Shelter</option>");
+        } else if (val == "controlunit") {
+            $("#atype").html("<option value='state'>State</option><option value='central'>Central</option>");
+        }
+    });
+});
+  </script>
+  <div class="container">
+  <div class="panel panel-warning">
+     <div class="panel-heading"><h2>Account Creation</h2></div>
+     <div class="panel-body">
+  <form name = "form" action = "/home/register/" method = "POST" id="registerform" > {% csrf_token %}
+    <div class="form-group">
+      <label for="username">Username:</label>
+      <input type="text" class="form-control" name="username" required="true" id="username" placeholder="Enter username">
+    </div>
+    <div class="form-group">
+      <label for="name">Name:</label>
+      <input type="text" class="form-control" name="name" required="true" id="name" placeholder="Enter name">
+    </div>
+    <div class="form-group">
+      <label for="pwd">Password:</label>
+      <input type="password" class="form-control" name="pwd" required="true" id="pwd" placeholder="Enter password">
+    </div>
+    <div class="form-group">
+      <label for="rpwd">Retype-Password:</label>
+      <input type="password" class="form-control" name="rpwd" id="rpwd"  oninput="check(this)" placeholder="Retype password" required="true">
+    </div>
+    <script language='javascript' type='text/javascript'>
+
+                     function check(input) {
+                 if (input.value != document.getElementById('pwd').value) {
+                          input.setCustomValidity('Password Must be Matching.');
+                          }
+                        else {
+                                  // input is valid -- reset the error message
+                                  input.setCustomValidity('');
+                              }
+                          }
+                </script>
+    <div class="form-group">
+    <label for="user">Select Category:</label>
+      <select class="form-control" name ="category" id="category" required="true">
+        <option value="null">Select User</option>
+        <option value="volunteer">Volunteer</option>
+        <option value="hospital">Hospital</option>
+        <option value="accommodation" >Accommodation Place</option>
+        <option value="pronearea" >Prone Area</option>
+         <option value="controlunit" >Control Panel</option>
+      </select>
+      </div>
+      <div class="form-group">
+      <label for="atype">Select Type:</label>
+        <select class="form-control" name ="atype" id="atype" required="true">
+          <option value="null">Select Type</option>
+        </select>
+        </div>
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" class="form-control" name="email" required="true" id="email" placeholder="Enter Email">
+      </div>
+      <div class="form-group">
+        <label for="contactno">Contact No:</label>
+        <input type="number" min=0 class="form-control" name="contactno" required="true" id="contactno" placeholder="Enter Number">
+      </div>
+    <div class="form-group">
+        <label for= "lname" >Location :</label>
+        <input type="text"  class="form-control" name="lname" required="true" id="lname" placeholder="Enter Place Name">
+      </div>
+      <div class="form-group">
+        <a href="http://www.mapcoordinates.net/en" class="btn btn-link" target="_blank" >Find your Latitude and Longitude</a>
+        <br>
+         <div class="form-group">
+        <label for="la">Location (Latitude):</label>
+        <input type="number" min=-85 max=85  class="form-control" name="la" required="true" id="la" placeholder="Enter Latitude" step=0.0000001>
+      </div>
+        <label for="ll">Location (Longitude):</label>
+        <input type="number" min=-180 max=180 class="form-control" name="ll" required="true" id="ll" placeholder="Enter Longititude" step=0.0000001>
+      </div>
+
+      <br>
+      <br>
+    <a href="/home/login" class="btn btn-info" role="button">Login (Existing User)</a> &nbsp  &nbsp  &nbsp  &nbsp
+    &nbsp  &nbsp  &nbsp  &nbsp &nbsp  &nbsp  &nbsp  &nbsp
+    <button type="submit" value="register" id="alert" name="register" class="btn btn-default" >Register</button>
+  </form>
+</div>
+  </div>
+
+</div>
+
+</body>
+</html>

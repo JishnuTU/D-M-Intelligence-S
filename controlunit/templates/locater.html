@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Control Panel</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+ </head>
+
+<body>
+
+<script src="https://cdn.rawgit.com/alertifyjs/alertify.js/v1.0.10/dist/js/alertify.js"></script>
+<script>
+    var a={{altmess|safe}}
+    if(a!="")
+      alertify.confirm(a,function (e) {
+                 if (e) {
+                    alertify.success("You've clicked OK");
+                 } else {
+                    alertify.error("You've clicked Cancel");
+                 }
+              });
+
+</script>
+
+<div class="jumbotron text-center">
+    <h1>Disaster Management Intelligence System</h1>
+    <p>Specialized in Management of Disaster  </p>
+  </div>
+<div class="container">
+
+<nav class="navbar navbar-default" style="background-color: #FFFAFA;">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand"  href="#">DMIS</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+    <li class="active"><a href="/controlunit/" class="btn btn-default navbar-btn btn-xs ">Home</a></li> &nbsp;
+    <li ><a href="/controlunit/systempanel" class="btn btn-default navbar-btn btn-xs ">Control Panel</a></li> &nbsp;
+    <li><a href="/controlunit/nearestlocater" class="btn btn-default btn-xs navbar-btn">Nearest Locater</a></li>
+    <li><a href="/controlunit/messages" class="btn btn-default btn-xs navbar-btn" >Messages</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#" class="btn btn-default navbar-btn btn-xs " ><span class="glyphicon glyphicon-user"></span> &nbsp {{username}}</a></li>
+        <li><a href="/controlunit/logout" class="btn btn-default btn-xs navbar-btn"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="container-fluid">
+
+    <div class="panel panel-info">
+      <div class="panel-heading"><h2>Nearest Service Locater</h2></div>
+      <div class="panel-body">
+      <form class="form-inline" method="post">{% csrf_token %}
+    <div class="form-group">
+      <label for="latitude">Latitude:</label>
+      <input type="number" step="0.0000001" class="form-control" id="latitude" name="latitude" required="true" placeholder="Enter latitude">
+    </div>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <div class="form-group">
+      <label for="longitude">Longitude:</label>
+      <input type="number" step="0.0000001" class="form-control" id="longitude" name="longitude" required="true"  placeholder="Enter longitude">
+    </div>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <div class="form-group">
+      <label for="Distance">Distance:</label>
+      <input type="number" step="0.001" min="0" class="form-control" id="distance" name="distance" required="true"  placeholder="Enter range in kilometers">
+    </div>
+
+    <div class="form-group">
+              <br>
+  <label for="selectaid">Select Aid:</label>
+  <select class="form-control" id="selectaid" name="selectaid">
+       <option value="null">Select</option>
+      <option value="volunteer">Volunteer</option>
+    <option value="hospital">Hospital</option>
+     <option value="accomodation">Accomodation Places</option>
+    <option value="food">Food</option>
+    <option value="water">Water</option>
+       <option value="rescuetool">Rescue Tools</option>
+    <option value="firstaid">Firstaid</option>
+      <option value="pronearea">Prone Area</option>
+    <option value="fireengine">Fire Engine</option>
+    <option value="jcb">JCB</option>
+    <option value="ambulance">Ambulance</option>
+          <option value="transportg">Transportation of Goods</option>
+      <option value="transporth">Transportation of Human</option>
+
+  </select>
+</div>
+    <br><br>
+    &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+    <button type="submit" name="submitlocater" class="btn btn-default">Submit</button>
+  </form>
+  </div>
+</div>
+<script src="http://maps.googleapis.com/maps/api/js?sensor=false" type="text/javascript"></script><script type="text/javascript">
+var markers = {{mapelt|safe}};
+window.onload = function () {
+var mapOptions = {
+center: new google.maps.LatLng(markers[0].lat, markers[0].lng),
+zoom: 10,
+mapTypeId: google.maps.MapTypeId.ROADMAP
+};
+var map = new google.maps.Map(document.getElementById("dvMap"), mapOptions);
+var infoWindow = new google.maps.InfoWindow();
+var lat_lng = new Array();
+var latlngbounds = new google.maps.LatLngBounds();
+for (i = 0; i < markers.length; i++) {
+var data = markers[i]
+var myLatlng = new google.maps.LatLng(data.lat, data.lng);
+lat_lng.push(myLatlng);
+var marker = new google.maps.Marker({
+position: myLatlng,
+map: map,
+title: data.title
+});
+latlngbounds.extend(marker.position);
+(function (marker, data) {
+google.maps.event.addListener(marker, "click", function (e) {
+infoWindow.setContent(data.description);
+infoWindow.open(map, marker);
+});
+})(marker, data);
+}
+map.setCenter(latlngbounds.getCenter());
+map.fitBounds(latlngbounds);
+}
+
+</script>
+    <div class="row">
+        <div class="col-sm-6">
+            <div id="dvMap" style="width: 500px; height: 500px;"></div>
+        </div>
+        <div class="col-sm-6">
+            <div class="panel panel-success">
+      <div class="panel-heading">Search Result</div>
+      <div class="panel-body">
+
+                    <div class="list-group">
+                    {% for aid in selectedaid %}
+                        <a href="#" class="list-group-item">
+                            <span class="name" style="min-width: 120px;
+                                display: inline-block;"><mark>{{aid.user.username}}</mark></span>
+                            <span class="list-unstyled" style="font-size: 11px;"><h5>Location : {{aid.user.location}}</h5></span>
+                            <span class="text-muted" style="font-size: 11px;">  <p>Contact Number :{{aid.user.contact_no}} </p></span>
+                                <form method="post">{% csrf_token %}
+                                 <button type="submit" name="allocate" value={{aid.user.username}} class="btn btn-info">Allocate</button>
+                                    <button type="submit" name="deallocate" value={{aid.user.username}} class="btn btn-danger">Deallocate</button>
+                                    </form>
+                            <br>
+                             <button  name="opensendmodal" data-toggle="modal" data-target="#{{aid.user.username}}" class="btn btn-success">Send SMS</button>
+
+
+                              <div class="modal fade" id={{aid.user.username}} role="dialog">
+
+                                                        <div class="modal-dialog">
+                                                          <div class="modal-content">
+                                                            <div class="modal-header">
+                                                              <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                              <h4 class="modal-title">Send Message  [To : {{aid.user.username}}] </h4>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <form method="post">{% csrf_token %}
+                                                              <div class="form-group">
+                                                            <label for="topic">Topic:</label><select class="form-control" name="topic" id="topic" required="true">
+                                                        <option value="Request">Request</option>
+                                                        <option value="Alert">Alert</option>
+                                                        <option value="Other">Other</option>
+                                                      </select>
+                                                      </div>
+                                                      <div class="form-group">
+                                                        <label for="msgbody">Message:</label>
+                                                        <textarea class="form-control" rows="5"  name="message" id="message" required="true"></textarea>
+                                                      </div>
+                                                        <div class="form-group">
+                                                        <label for="parameter">Extra field:</label>
+                                                        <input type="number" min ="0" value="0" class="form-control" name="parameter" id="parameter" placeholder="Enter the Required Quantity">
+                                                      </div>
+                                                        <button type="submit" name="send" value={{aid.user.username}} class="btn btn-success">Send</button>
+                                                            </div>
+                                                               </form>
+                                                            <div class="modal-footer">
+                                                              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                            </div>
+                                                          </div>
+
+                    </div>
+                                                      </div>
+
+                                          </a>
+
+                        {% endfor %}
+                    </div>
+
+      </div>
+    </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
